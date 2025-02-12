@@ -71,6 +71,26 @@ pizzas = {
 st.set_page_config(page_title="Calcul des ingrédients à commander pour les pizzas 🍕", layout="wide")
 st.title("Calcul des ingrédients à commander pour les pizzas 🍕")
 
+# CSS pour masquer les deux premières colonnes et la première ligne des trois premiers tableaux
+st.markdown(
+    """
+    <style>
+    /* Masquer les deux premières colonnes */
+    table tr th:nth-child(1),
+    table tr th:nth-child(2),
+    table tr td:nth-child(1),
+    table tr td:nth-child(2) {
+        display: none;
+    }
+    /* Masquer la première ligne */
+    table tr:first-child {
+        display: none;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Interface utilisateur
 cols = st.columns(3)
 nombres_pizzas = [cols[i].number_input(nom, min_value=0, step=1, value=1) for i, nom in enumerate(pizzas)]
