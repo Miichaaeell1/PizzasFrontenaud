@@ -87,7 +87,7 @@ pizzas = {
 # Configuration de la page Streamlit
 st.set_page_config(page_title="Calcul des ingrédients à commander pour les pizzas 🍕", layout="wide")
 
-st.title("Calcul des Ingrédients pour Pizzas")
+st.title("Calcul des ingrédients à commander pour les pizzas 🍕")
 
 st.markdown(
     """
