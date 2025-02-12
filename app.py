@@ -32,12 +32,9 @@ def ajustements_specifiques(totaux, unites):
 def organiser_resultats(totaux, unites):
     """Organise les résultats pour l'affichage."""
     boite_a_pizza = totaux.pop("Boîte à pizza", None)
-    result = [(
-        f"{ing} : {round(qte, 2)} {unites[ing]}" if ing != "Boîte à pizza" else
-        f"{ing} : {int(qte)} Unités"
-    ) for ing, qte in totaux.items()]
+    result = [(ing, f"{round(qte, 2)} {unites[ing]}") for ing, qte in totaux.items()]
     if boite_a_pizza is not None:
-        result.append(f"Boîte à pizza : {boite_a_pizza} Unités")
+        result.append(("Boîte à pizza", f"{boite_a_pizza} Unités"))
     return result
 
 # Définition des recettes de pizzas
@@ -104,4 +101,7 @@ if st.button("Calculer les Ingrédients"):
         st.table([("#", "Ingrédient", "Qté totale")] + calculer_quantites(pizza, nombre))
 
     st.subheader("Récapitulatif des Totaux")
-    st.table([("Ingrédients à acheter", "Qté à acheter")] + calculer_totaux(nombres_pizzas, list(pizzas.values())))
+    totaux = calculer_totaux(nombres_pizzas, list(pizzas.values()))
+    
+    # Modifier pour afficher les ingrédients et quantités dans deux colonnes
+    st.table([("Ingrédient", "Quantité Totale")] + totaux)
