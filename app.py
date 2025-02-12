@@ -9,26 +9,16 @@ def calculer_quantites(pizza, nombre):
 
 def calculer_totaux(nombres_pizzas, pizzas):
     """Calcule les totaux des ingrédients pour plusieurs types de pizzas."""
-    totaux = {}
-    unites = {}
+    totaux, unites = {}, {}
 
     for pizza, nombre in zip(pizzas, nombres_pizzas):
         for _, ingredient, quantite_unite in calculer_quantites(pizza, nombre):
-            quantite_str, unite = quantite_unite.split()
-            quantite = float(quantite_str)
-            if ingredient in totaux:
-                totaux[ingredient] += quantite
-            else:
-                totaux[ingredient] = quantite
-                unites[ingredient] = unite
+            quantite, unite = quantite_unite.split()
+            totaux[ingredient] = totaux.get(ingredient, 0) + float(quantite)
+            unites[ingredient] = unite
 
-    # Ajustements spécifiques pour certains ingrédients
     ajustements_specifiques(totaux, unites)
-
-    # Mettre "Boîte à pizza" en dernière ligne
-    result = organiser_resultats(totaux, unites)
-
-    return result
+    return organiser_resultats(totaux, unites)
 
 def ajustements_specifiques(totaux, unites):
     """Applique des ajustements spécifiques à certains ingrédients."""
@@ -42,16 +32,9 @@ def ajustements_specifiques(totaux, unites):
 def organiser_resultats(totaux, unites):
     """Organise les résultats pour l'affichage."""
     boite_a_pizza = totaux.pop("Boîte à pizza", None)
-    boite_a_pizza_unite = unites.pop("Boîte à pizza", "Unités")
-
-    result = [
-        (ingredient, f"{round(qte, 2)} {unites[ingredient]}")
-        for ingredient, qte in totaux.items()
-    ]
-
+    result = [(ing, f"{round(qte, 2)} {unites[ing]}") for ing, qte in totaux.items()]
     if boite_a_pizza is not None:
-        result.append(("Boîte à pizza", f"{boite_a_pizza} {boite_a_pizza_unite}"))
-
+        result.append(("Boîte à pizza", f"{boite_a_pizza} Unités"))
     return result
 
 # Définition des recettes de pizzas
@@ -86,92 +69,16 @@ pizzas = {
 
 # Configuration de la page Streamlit
 st.set_page_config(page_title="Calcul des ingrédients à commander pour les pizzas 🍕", layout="wide")
-
 st.title("Calcul des ingrédients à commander pour les pizzas 🍕")
 
-st.markdown(
-    """
-    <style>
-    .main {
-        padding: 2rem;
-        background-color: #F6F6F6;
-    }
-    .stButton>button {
-        background-color: #F6F6F6;
-        color: black;
-        font-weight: bold;
-        border-radius: 5px;
-        padding: 0.5rem 1rem;
-        border: 2px solid #FFFFFF;
-    }
-    .stButton>button:hover {
-        background-color: #F6F6F6;
-        color: black;
-    }
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        margin-bottom: 2rem;
-        background-color: #F6F6F6;
-        table-layout: auto;
-        word-wrap: break-word;
-    }
-    th, td {
-        border: 2px solid #FFFFFF;
-        padding: 8px;
-        text-align: left;
-        white-space: normal;
-    }
-    th {
-        background-color: #FACE38;
-        color: white;
-    }
-    h1, h2 {
-        color: #036093;
-    }
-    /* Hide first column and first row */
-    table tr:first-child,
-    table tr td:first-child,
-    table tr th:first-child {
-        display: none;
-    }
-    /* Augmenter la taille du texte des sous-titres */
-    .stSubheader {
-        font-size: 23px; /* Ajustez la taille selon vos besoins */
-        font-weight: bold;
-    }
-    /* Augmenter la taille du texte pour certaines pizzas */
-    .pizza-title {
-        font-size: 30px; /* Ajustez la taille en fonction de vos besoins */
-        font-weight: bold;
-        color: #036093; /* La même couleur que les titres principaux */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Interface utilisateur
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    nombre_pizzas_1 = st.number_input("Pizz'Adagio", min_value=0, step=1, value=1)
-with col2:
-    nombre_pizzas_2 = st.number_input("Trio de fromages", min_value=0, step=1, value=1)
-with col3:
-    nombre_pizzas_3 = st.number_input("Ballade Bressane", min_value=0, step=1, value=1)
+cols = st.columns(3)
+nombres_pizzas = [cols[i].number_input(nom, min_value=0, step=1, value=1) for i, nom in enumerate(pizzas)]
 
 if st.button("Calculer les Ingrédients"):
-    nombres_pizzas = [nombre_pizzas_1, nombre_pizzas_2, nombre_pizzas_3]
-
-    for nom_pizza, nombre, pizza in zip(pizzas.keys(), nombres_pizzas, pizzas.values()):
-        # Appliquer la classe "pizza-title" ici pour augmenter la taille
-        st.markdown(f'<h2 class="pizza-title">Ingrédients pour {nom_pizza} ({nombre} pizzas)</h2>', unsafe_allow_html=True)
-        st.table(
-            [("#", "Ingrédient", "Qté totale")] + calculer_quantites(pizza, nombre)
-        )
+    for nom, nombre, pizza in zip(pizzas, nombres_pizzas, pizzas.values()):
+        st.markdown(f'<h2 class="pizza-title">Ingrédients pour {nom} ({nombre} pizzas)</h2>', unsafe_allow_html=True)
+        st.table([("#", "Ingrédient", "Qté totale")] + calculer_quantites(pizza, nombre))
 
     st.subheader("Récapitulatif des Totaux")
-    st.table(
-        [("Ingrédients à acheter", "Qté à acheter")] + calculer_totaux(nombres_pizzas, list(pizzas.values()))
-    )
+    st.table([("Ingrédients à acheter", "Qté à acheter")] + calculer_totaux(nombres_pizzas, list(pizzas.values())))
