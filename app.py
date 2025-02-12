@@ -75,14 +75,14 @@ st.title("Calcul des ingrédients à commander pour les pizzas 🍕")
 st.markdown(
     """
     <style>
-    /* Masquer les deux premières colonnes */
+    /* Masquer les deux premières colonnes uniquement dans les tableaux intermédiaires */
     table tr th:nth-child(1),
     table tr th:nth-child(2),
     table tr td:nth-child(1),
     table tr td:nth-child(2) {
         display: none;
     }
-    /* Masquer la première ligne */
+    /* Masquer la première ligne uniquement dans les tableaux intermédiaires */
     table tr:first-child {
         display: none;
     }
@@ -103,5 +103,5 @@ if st.button("Calculer les Ingrédients"):
     st.subheader("Récapitulatif des Totaux")
     totaux = calculer_totaux(nombres_pizzas, list(pizzas.values()))
     
-    # Modifier pour afficher les ingrédients et quantités dans deux colonnes
+    # Afficher les ingrédients et quantités dans deux colonnes
     st.table([("Ingrédient", "Quantité Totale")] + totaux)
