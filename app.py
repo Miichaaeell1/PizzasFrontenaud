@@ -144,11 +144,11 @@ st.markdown(
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    nombre_pizzas_1 = st.number_input("Nombre de Pizz'Adagio", min_value=0, step=1, value=1)
+    nombre_pizzas_1 = st.number_input("Pizz'Adagio", min_value=0, step=1, value=1)
 with col2:
-    nombre_pizzas_2 = st.number_input("Nombre de Trio de fromages", min_value=0, step=1, value=1)
+    nombre_pizzas_2 = st.number_input("Trio de fromages", min_value=0, step=1, value=1)
 with col3:
-    nombre_pizzas_3 = st.number_input("Nombre de Ballade Bressane", min_value=0, step=1, value=1)
+    nombre_pizzas_3 = st.number_input("Ballade Bressane", min_value=0, step=1, value=1)
 
 if st.button("Calculer les Ingrédients"):
     nombres_pizzas = [nombre_pizzas_1, nombre_pizzas_2, nombre_pizzas_3]
