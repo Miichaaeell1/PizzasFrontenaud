@@ -78,7 +78,7 @@ pizzas = {
         ["Mozzarella en cossettes", 0.1, "Kg"],
         ["Lardons", 0.05, "Kg"],
         ["Oignons émincés", 0.03, "Kg"],
-        ["Emmental râpé", 0.1, "Kg"],  # Ajout de la ligne Emmental râpé
+        ["Emmental râpé", 0.1, "Kg"],
         ["Olives noires dénoyautées", 5, "Unités"],
         ["Boîte à pizza", 1, "Unités"]
     ]
@@ -134,6 +134,11 @@ st.markdown(
     table tr td:first-child,
     table tr th:first-child {
         display: none;
+    }
+    /* Augmenter la taille du texte des sous-titres */
+    .stSubheader {
+        font-size: 24px; /* Ajustez la taille selon vos besoins */
+        font-weight: bold;
     }
     </style>
     """,
