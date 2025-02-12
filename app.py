@@ -140,6 +140,12 @@ st.markdown(
         font-size: 23px; /* Ajustez la taille selon vos besoins */
         font-weight: bold;
     }
+    /* Augmenter la taille du texte pour certaines pizzas */
+    .pizza-title {
+        font-size: 30px; /* Ajustez la taille en fonction de vos besoins */
+        font-weight: bold;
+        color: #036093; /* La même couleur que les titres principaux */
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -159,7 +165,8 @@ if st.button("Calculer les Ingrédients"):
     nombres_pizzas = [nombre_pizzas_1, nombre_pizzas_2, nombre_pizzas_3]
 
     for nom_pizza, nombre, pizza in zip(pizzas.keys(), nombres_pizzas, pizzas.values()):
-        st.subheader(f"Ingrédients pour {nom_pizza} ({nombre} pizzas)")
+        # Appliquer la classe "pizza-title" ici pour augmenter la taille
+        st.markdown(f'<h2 class="pizza-title">Ingrédients pour {nom_pizza} ({nombre} pizzas)</h2>', unsafe_allow_html=True)
         st.table(
             [("#", "Ingrédient", "Qté totale")] + calculer_quantites(pizza, nombre)
         )
