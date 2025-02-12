@@ -32,9 +32,12 @@ def ajustements_specifiques(totaux, unites):
 def organiser_resultats(totaux, unites):
     """Organise les résultats pour l'affichage."""
     boite_a_pizza = totaux.pop("Boîte à pizza", None)
-    result = [(ing, f"{round(qte, 2)} {unites[ing]}") for ing, qte in totaux.items()]
+    result = [(
+        f"{ing} : {round(qte, 2)} {unites[ing]}" if ing != "Boîte à pizza" else
+        f"{ing} : {int(qte)} Unités"
+    ) for ing, qte in totaux.items()]
     if boite_a_pizza is not None:
-        result.append(("Boîte à pizza", f"{boite_a_pizza} Unités"))
+        result.append(f"Boîte à pizza : {boite_a_pizza} Unités")
     return result
 
 # Définition des recettes de pizzas
