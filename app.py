@@ -137,7 +137,7 @@ st.markdown(
     }
     /* Augmenter la taille du texte des sous-titres */
     .stSubheader {
-        font-size: 30px; /* Ajustez la taille selon vos besoins */
+        font-size: 10px; /* Ajustez la taille selon vos besoins */
         font-weight: bold;
     }
     </style>
