@@ -109,7 +109,8 @@ if st.button("Calculer les Ingrédients"):
 
 # Ajout du code pour récupérer les coordonnées GPS
 st.subheader("Coordonnées GPS de l'adresse")
-adresse = st.text_input("Entrez une adresse pour obtenir ses coordonnées GPS", "14F rue Pierre de Coubertin, 21000 Dijon")
+adresse_par_defaut = "14 rue Pierre de Coubertin 21000 DIJON"
+adresse = st.text_input("Entrez une adresse pour obtenir ses coordonnées GPS", adresse_par_defaut)
 
 if st.button("Obtenir les coordonnées GPS"):
     url = f"https://nominatim.openstreetmap.org/search?q={adresse}&format=json"
