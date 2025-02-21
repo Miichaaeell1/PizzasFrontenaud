@@ -106,21 +106,3 @@ if st.button("Calculer les Ingrédients"):
     
     # Afficher les ingrédients et quantités dans deux colonnes
     st.table([("Ingrédient", "Quantité Totale")] + totaux)
-
-# Ajout du code pour récupérer les coordonnées GPS
-st.subheader("Coordonnées GPS de l'adresse")
-adresse_par_defaut = "14 rue Pierre de Coubertin 21000 DIJON"
-adresse = st.text_input("Entrez une adresse pour obtenir ses coordonnées GPS", adresse_par_defaut)
-
-if st.button("Obtenir les coordonnées GPS"):
-    url = f"https://nominatim.openstreetmap.org/search?q={adresse}&format=json"
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        if data:
-            latitude, longitude = data[0]["lat"], data[0]["lon"]
-            st.success(f"Coordonnées GPS : {latitude}, {longitude}")
-        else:
-            st.error("Aucune donnée trouvée pour cette adresse.")
-    else:
-        st.error("Erreur lors de la récupération des données.")
